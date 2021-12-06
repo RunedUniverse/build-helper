@@ -28,7 +28,7 @@ pipeline {
 		}
 		stage('Deploy Helper') {
 			parallel {
-			    stage('Maven - Java') {
+			    stage('Maven') {
 			        steps {
 			        	dir(path: 'maven') {
 			        		sh 'mvn -P repo-development,helper-deploy'
