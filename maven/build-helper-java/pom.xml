@@ -51,6 +51,43 @@
 		<junit-jupiter-engine-version>5.7.1</junit-jupiter-engine-version>
 	</properties>
 
+	<licenses>
+		<license>
+			<name>Apache License, Version 2</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>RunedUniverse</name>
+		<url>https://www.runeduniverse.net</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>pl4yingnight</id>
+			<name>Pl4yingNight</name>
+			<email>pl4yingnight@gmail.com</email>
+			<organization>RunedUniverse</organization>
+			<organizationUrl>https://www.runeduniverse.net</organizationUrl>
+			<timezone>Europe/Vienna</timezone>
+			<roles>
+				<role>Maintainer</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/RunedUniverse/build-helper</url>
+		<connection>scm:git:git://github.com/RunedUniverse/build-helper.git</connection>
+		<developerConnection>scm:git:git@github.com:RunedUniverse/build-helper.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/RunedUniverse/build-helper/issues</url>
+	</issueManagement>
+
 	<profiles>
 		<!-- LICENSES -->
 		<profile>
