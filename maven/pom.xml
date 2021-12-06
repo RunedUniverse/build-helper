@@ -147,7 +147,7 @@
 									<dependencyPolicy>
 										<type>ARTIFACT_PATTERN</type>
 										<rule>APPROVE</rule>
-										<value>net.runeduniverse.libs</value>
+										<value>net.runeduniverse.lib</value>
 									</dependencyPolicy>
 								</dependencyPolicies>
 							</configuration>
