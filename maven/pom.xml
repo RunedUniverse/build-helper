@@ -1,0 +1,349 @@
+<!--
+
+    Copyright © 2021 Pl4yingNight (pl4yingnight@gmail.com)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.runeduniverse.tools</groupId>
+	<artifactId>build-helper</artifactId>
+	<version>2021.12.06</version>
+	<packaging>pom</packaging>
+	<name>Build Helper</name>
+	<description>contains dependency management for build/install/deploy of maven projects</description>
+	<inceptionYear>2021</inceptionYear>
+
+	<modules>
+		<module>build-helper-java</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- ACTIVITIONS -->
+		<license-enforce>false</license-enforce>
+		<!-- ACTIVITIONS - LICENSES -->
+		<license-prj-utils-approve>false</license-prj-utils-approve>
+		<license-apache2-approve>false</license-apache2-approve>
+		<!-- VERSIONS -->
+		<plugin-maven-clean-version>2.5</plugin-maven-clean-version>
+		<plugin-maven-install-version>2.4</plugin-maven-install-version>
+		<plugin-mycila-license-version>4.2.rc1</plugin-mycila-license-version>
+		<plugin-maven-gpg-version>3.0.1</plugin-maven-gpg-version>
+		<plugin-maven-deploy-version>2.8.2</plugin-maven-deploy-version>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>RunedUniverse</name>
+		<url>https://www.runeduniverse.net</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>pl4yingnight</id>
+			<name>Pl4yingNight</name>
+			<email>pl4yingnight@gmail.com</email>
+			<organization>RunedUniverse</organization>
+			<organizationUrl>https://www.runeduniverse.net</organizationUrl>
+			<timezone>Europe/Vienna</timezone>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/RunedUniverse/build-helper</url>
+		<connection>scm:git:git://github.com/RunedUniverse/build-helper.git</connection>
+		<developerConnection>scm:git:git@github.com:RunedUniverse/build-helper.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>https://github.com/RunedUniverse/build-helper/issues</url>
+	</issueManagement>
+
+	<profiles>
+		<!-- DISTRIBUTION -->
+		<profile>
+			<id>repo-releases</id>
+			<distributionManagement>
+				<repository>
+					<id>runeduniverse-releases</id>
+					<url>https://nexus.runeduniverse.net/repository/maven-releases/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+		<profile>
+			<id>repo-development</id>
+			<distributionManagement>
+				<repository>
+					<id>runeduniverse-development</id>
+					<url>https://nexus.runeduniverse.net/repository/maven-development/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+		<!-- LICENSES -->
+		<profile>
+			<id>license-check</id>
+			<build>
+				<defaultGoal>license:check</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>com.mycila</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>license-update</id>
+			<build>
+				<defaultGoal>license:format</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>com.mycila</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>license-prj-utils-approve</id>
+			<activation>
+				<property>
+					<name>license-prj-utils-approve</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>com.mycila</groupId>
+							<artifactId>license-maven-plugin</artifactId>
+							<configuration>
+								<dependencyPolicies>
+									<!-- approve - RunedUniverse Utils Packages -->
+									<dependencyPolicy>
+										<type>ARTIFACT_PATTERN</type>
+										<rule>APPROVE</rule>
+										<value>net.runeduniverse.libs</value>
+									</dependencyPolicy>
+								</dependencyPolicies>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+		<profile>
+			<id>license-apache2-approve</id>
+			<activation>
+				<property>
+					<name>license-apache2-approve</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>com.mycila</groupId>
+							<artifactId>license-maven-plugin</artifactId>
+							<configuration>
+								<dependencyPolicies>
+									<!-- approve - Apache 2 -->
+									<dependencyPolicy>
+										<type>LICENSE_NAME</type>
+										<rule>APPROVE</rule>
+										<value>Apache License, Version 2</value>
+									</dependencyPolicy>
+									<dependencyPolicy>
+										<type>LICENSE_NAME</type>
+										<rule>APPROVE</rule>
+										<value>The Apache Software License, Version 2.0</value>
+									</dependencyPolicy>
+									<dependencyPolicy>
+										<type>LICENSE_URL</type>
+										<rule>APPROVE</rule>
+										<value>https://www.apache.org/licenses/LICENSE-2.0</value>
+									</dependencyPolicy>
+								</dependencyPolicies>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+		<!-- JENKINS -->
+		<profile>
+			<id>jenkins-install</id>
+			<build>
+				<defaultGoal>clean org.apache.maven.plugins:maven-gpg-plugin:sign install</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-clean-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-install-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>jenkins-test-system</id>
+			<build>
+				<defaultGoal>test</defaultGoal>
+			</build>
+		</profile>
+		<profile>
+			<id>jenkins-deploy</id>
+			<build>
+				<defaultGoal>deploy</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<!-- HELPER - PROFILES -->
+		<profile>
+			<id>helper-properties</id>
+			<properties>
+				<root-dir>${project.basedir}</root-dir>
+			</properties>
+		</profile>
+		<profile>
+			<id>helper-license</id>
+			<build>
+				<defaultGoal>license:format</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>com.mycila</groupId>
+						<artifactId>license-maven-plugin</artifactId>
+						<configuration>
+							<properties>
+								<year>2021</year>
+								<owner>Pl4yingNight</owner>
+								<email>pl4yingnight@gmail.com</email>
+							</properties>
+							<licenseSets>
+								<licenseSet>
+									<header>${root-dir}/src/license/header.txt</header>
+								</licenseSet>
+							</licenseSets>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>helper-install</id>
+			<build>
+				<defaultGoal>clean install</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-clean-plugin</artifactId>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-install-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>helper-deploy</id>
+			<build>
+				<defaultGoal>deploy</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${plugin-maven-clean-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${plugin-maven-install-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>com.mycila</groupId>
+					<artifactId>license-maven-plugin</artifactId>
+					<version>${plugin-mycila-license-version}</version>
+					<configuration>
+						<mapping>
+							<java>SLASHSTAR_STYLE</java>
+						</mapping>
+						<licenseSets>
+							<licenseSet>
+								<!-- <header/> to be overwritten -->
+								<excludes>
+									<exclude>**/license/**</exclude>
+								</excludes>
+							</licenseSet>
+						</licenseSets>
+						<dependencyEnforce>${license-enforce}</dependencyEnforce>
+						<dependencyExceptionMessage>1 or more dependencies got rejected
+							doe to invalid licenses!
+							Contact the Maintainer for a solution!</dependencyExceptionMessage>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${plugin-maven-gpg-version}</version>
+					<configuration>
+						<homedir>/var/lib/jenkins/gpg</homedir>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>${plugin-maven-deploy-version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
