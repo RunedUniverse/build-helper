@@ -40,7 +40,7 @@ pipeline {
 	}
 	post {
 		success {
-		    archiveArtifacts artifacts: '/maven/**/pom.xml', fingerprint: true
+		    archiveArtifacts artifacts: 'maven/**/pom.xml', fingerprint: true
 		}
 		cleanup {
 			cleanWs()
