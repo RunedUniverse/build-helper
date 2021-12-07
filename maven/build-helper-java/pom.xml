@@ -199,6 +199,25 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>jenkins-deploy-signed</id>
+			<build>
+				<defaultGoal>deploy</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<skipTests>true</skipTests>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<!-- HELPER - PROFILES -->
 		<profile>
 			<id>helper-properties</id>
