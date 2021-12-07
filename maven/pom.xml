@@ -86,31 +86,6 @@
 	</issueManagement>
 
 	<profiles>
-		<!-- DEBUG - INFO -->
-		<profile>
-			<id>info</id>
-			<build>
-				<defaultGoal>help:all-profiles help:active-profiles help:system</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-help-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>info-full</id>
-			<build>
-				<defaultGoal>help:all-profiles help:active-profiles help:system help:effective-pom help:effective-settings</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-help-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 		<!-- DISTRIBUTION -->
 		<profile>
 			<id>repo-releases</id>
@@ -460,12 +435,28 @@
 	</profiles>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-help-plugin</artifactId>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-help-plugin</artifactId>
 					<version>${plugin-maven-help-version}</version>
+					<executions>
+						<execution>
+							<phase>install</phase>
+							<inherited>true</inherited>
+							<goals>
+								<goal>all-profiles</goal>
+								<goal>active-profiles</goal>
+							</goals>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
