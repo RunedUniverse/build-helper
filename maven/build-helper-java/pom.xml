@@ -220,21 +220,17 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>${project.artifactId}-${project.version}</file>
-									<type>pom.asc</type>
+									<file>${project.artifactId}-${project.version}.pom.asc</file>
 								</artifact>
 								<artifact>
-									<file>${project.artifactId}-${project.version}</file>
-									<type>jar.asc</type>
+									<file>${project.artifactId}-${project.version}.jar.asc</file>
 								</artifact>
 								<artifact>
-									<file>${project.artifactId}-${project.version}-javadoc</file>
-									<type>jar.asc</type>
+									<file>${project.artifactId}-${project.version}-javadoc.jar.asc</file>
 									<classifier>optional</classifier>
 								</artifact>
 								<artifact>
-									<file>${project.artifactId}-${project.version}-sources</file>
-									<type>jar.asc</type>
+									<file>${project.artifactId}-${project.version}-sources.jar.asc</file>
 									<classifier>optional</classifier>
 								</artifact>
 							</artifacts>
