@@ -131,9 +131,12 @@
 		<!-- JENKINS -->
 		<profile>
 			<id>jenkins-install</id>
+			<properties>
+				<project-packaging>${project.packaging}</project-packaging>
+			</properties>
 			<activation>
 				<property>
-					<name>project.packaging</name>
+					<name>project-packaging</name>
 					<value>!pom</value>
 				</property>
 			</activation>
