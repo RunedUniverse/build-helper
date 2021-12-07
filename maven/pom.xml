@@ -39,6 +39,7 @@
 		<license-prj-utils-approve>false</license-prj-utils-approve>
 		<license-apache2-approve>false</license-apache2-approve>
 		<!-- VERSIONS -->
+		<plugin-maven-help-version>3.2.0</plugin-maven-help-version>
 		<plugin-maven-clean-version>2.5</plugin-maven-clean-version>
 		<plugin-maven-install-version>2.4</plugin-maven-install-version>
 		<plugin-mycila-license-version>4.2.rc1</plugin-mycila-license-version>
@@ -85,6 +86,31 @@
 	</issueManagement>
 
 	<profiles>
+		<!-- DEBUG - INFO -->
+		<profile>
+			<id>info</id>
+			<build>
+				<defaultGoal>help:all-profiles help:active-profiles help:system</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-help-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>info-full</id>
+			<build>
+				<defaultGoal>help:all-profiles help:active-profiles help:system help:effective-pom help:effective-settings</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-help-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 		<!-- DISTRIBUTION -->
 		<profile>
 			<id>repo-releases</id>
@@ -436,6 +462,11 @@
 	<build>
 		<pluginManagement>
 			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-help-plugin</artifactId>
+					<version>${plugin-maven-help-version}</version>
+				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
