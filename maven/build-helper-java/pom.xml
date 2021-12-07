@@ -263,10 +263,12 @@
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
 									<type>pom.asc</type>
+									<classifier>pom</classifier>
 								</artifact>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.jar.asc</file>
 									<type>jar.asc</type>
+									<classifier>jar</classifier>
 								</artifact>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}-javadoc.jar.asc</file>
