@@ -209,7 +209,7 @@
 		<profile>
 			<id>jenkins-deploy-signed</id>
 			<build>
-				<defaultGoal>deploy</defaultGoal>
+				<defaultGoal>build-helper:attach-artifact deploy</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
