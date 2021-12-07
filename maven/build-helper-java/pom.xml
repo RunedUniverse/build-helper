@@ -223,6 +223,19 @@
 						<artifactId>build-helper-maven-plugin</artifactId>
 						<configuration>
 							<artifacts>
+								<!-- javadoc -->
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}-javadoc.jar</file>
+									<type>jar</type>
+									<classifier>javadoc</classifier>
+								</artifact>
+								<!-- sources -->
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}-sources.jar</file>
+									<type>jar</type>
+									<classifier>sources</classifier>
+								</artifact>
+								<!-- gpg signatures -->
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
 									<type>pom.asc</type>
