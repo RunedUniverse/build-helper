@@ -122,6 +122,7 @@
 						<artifactId>maven-gpg-plugin</artifactId>
 						<configuration>
 							<repositoryId>central-nexus</repositoryId>
+							<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -270,6 +271,9 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
+						<configuration>
+							<file>${project.artifactId}-${version}.${packaging}</file>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
