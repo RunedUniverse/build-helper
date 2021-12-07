@@ -133,12 +133,6 @@
 		<!-- JENKINS -->
 		<profile>
 			<id>jenkins-install</id>
-			<activation>
-				<property>
-					<name>project-packaging</name>
-					<value>!pom</value>
-				</property>
-			</activation>
 			<build>
 				<defaultGoal>clean compile jar:jar source:jar-no-fork javadoc:jar gpg:sign install</defaultGoal>
 				<plugins>
