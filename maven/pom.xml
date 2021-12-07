@@ -363,7 +363,7 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>${project.artifactId}-${project.version}.pom.asc</file>
+									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
 								</artifact>
 							</artifacts>
 						</configuration>
