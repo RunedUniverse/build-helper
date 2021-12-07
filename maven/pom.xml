@@ -363,7 +363,7 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<type>xml.asc</type>
+									<type>pom.asc</type>
 								</artifact>
 							</artifacts>
 						</configuration>
