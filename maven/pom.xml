@@ -392,6 +392,7 @@
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
 									<type>pom.asc</type>
+									<classifier></classifier>
 								</artifact>
 							</artifacts>
 						</configuration>
