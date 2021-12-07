@@ -9,6 +9,7 @@ pipeline {
 			    stage('Maven') {
 			        steps {
 			        	dir(path: 'maven') {
+			        		sh 'mvn help:active-profiles --non-recursive'
 			        		sh 'mvn -P helper-install --non-recursive'
 			        	}						
 					}
@@ -20,6 +21,7 @@ pipeline {
 			    stage('Maven - Java') {
 			        steps {
 			        	dir(path: 'maven/build-helper-java') {
+			        		sh 'mvn help:active-profiles --non-recursive'
 			        		sh 'mvn -P helper-install --non-recursive'
 			        	}						
 					}
