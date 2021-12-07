@@ -364,6 +364,7 @@
 							<artifacts>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
+									<type>pom.asc</type>
 								</artifact>
 							</artifacts>
 						</configuration>

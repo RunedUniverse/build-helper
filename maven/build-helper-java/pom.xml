@@ -205,7 +205,7 @@
 		<profile>
 			<id>jenkins-deploy-signed</id>
 			<build>
-				<defaultGoal>build-helper:attach-artifact deploy</defaultGoal>
+				<defaultGoal>deploy</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -217,21 +217,33 @@
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>deploy</phase>
+								<goals>
+									<goal>attach-artifact</goal>
+								</goals>
+							</execution>
+						</executions>
 						<configuration>
 							<artifacts>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
+									<type>pom.asc</type>
 								</artifact>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.jar.asc</file>
+									<type>jar.asc</type>
 								</artifact>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}-javadoc.jar.asc</file>
-									<classifier>optional</classifier>
+									<type>jar.asc</type>
+									<classifier>javadoc</classifier>
 								</artifact>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}-sources.jar.asc</file>
-									<classifier>optional</classifier>
+									<type>jar.asc</type>
+									<classifier>sources</classifier>
 								</artifact>
 							</artifacts>
 						</configuration>
