@@ -33,6 +33,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- ACTIVITIONS -->
+		<project-packaging>${project.packaging}</project-packaging>
 		<!-- VERSIONS -->
 		<java-source-version>1.8</java-source-version>
 		<java-target-version>${java-source-version}</java-target-version>
@@ -131,9 +133,6 @@
 		<!-- JENKINS -->
 		<profile>
 			<id>jenkins-install</id>
-			<properties>
-				<project-packaging>${project.packaging}</project-packaging>
-			</properties>
 			<activation>
 				<property>
 					<name>project-packaging</name>
