@@ -486,7 +486,6 @@
 						<execution>
 							<id>install</id>
 							<phase>install</phase>
-							<inherited>true</inherited>
 							<goals>
 								<goal>all-profiles</goal>
 								<goal>active-profiles</goal>
@@ -495,7 +494,6 @@
 						<execution>
 							<id>deploy</id>
 							<phase>deploy</phase>
-							<inherited>true</inherited>
 							<goals>
 								<goal>all-profiles</goal>
 								<goal>active-profiles</goal>

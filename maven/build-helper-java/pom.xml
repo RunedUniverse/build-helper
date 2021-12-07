@@ -283,7 +283,6 @@
 							<execution>
 								<id>deploy</id>
 								<phase>package</phase>
-								<inherited>true</inherited>
 								<goals>
 									<goal>all-profiles</goal>
 									<goal>active-profiles</goal>
