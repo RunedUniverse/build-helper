@@ -219,7 +219,7 @@
 		<profile>
 			<id>jenkins-deploy-signed</id>
 			<build>
-				<defaultGoal>build-helper:attach-artifact deploy</defaultGoal>
+				<defaultGoal>all-profiles active-profiles build-helper:attach-artifact deploy</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -274,6 +274,17 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>deploy</id>
+								<phase>package</phase>
+								<inherited>true</inherited>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
