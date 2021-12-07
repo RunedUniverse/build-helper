@@ -9,7 +9,8 @@ pipeline {
 			    stage('Maven') {
 			        steps {
 			        	dir(path: 'maven') {
-			        		sh 'mvn -P info,helper-install --non-recursive'
+			        		sh 'mvn -P info --non-recursive'
+			        		sh 'mvn -P helper-install --non-recursive'
 			        	}						
 					}
 			    }
@@ -20,7 +21,8 @@ pipeline {
 			    stage('Maven - Java') {
 			        steps {
 			        	dir(path: 'maven/build-helper-java') {
-			        		sh 'mvn -P info,helper-install --non-recursive'
+			        		sh 'mvn -P info --non-recursive'
+			        		sh 'mvn -P helper-install --non-recursive'
 			        	}						
 					}
 			    }
@@ -31,7 +33,8 @@ pipeline {
 			    stage('Maven') {
 			        steps {
 			        	dir(path: 'maven') {
-			        		sh 'mvn -P info,repo-development,helper-deploy'
+			        		sh 'mvn -P info'
+			        		sh 'mvn -P repo-development,helper-deploy'
 			        	}						
 					}
 			    }
