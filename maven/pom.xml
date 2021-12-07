@@ -254,8 +254,12 @@
 		<profile>
 			<id>jenkins-deploy</id>
 			<build>
-				<defaultGoal>deploy</defaultGoal>
+				<defaultGoal>gpg:sign-and-deploy-file deploy</defaultGoal>
 				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
