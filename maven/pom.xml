@@ -363,6 +363,7 @@
 						<configuration>
 							<artifacts>
 								<artifact>
+									<file>${project.artifactId}-${project.version}</file>
 									<type>pom.asc</type>
 								</artifact>
 							</artifacts>
