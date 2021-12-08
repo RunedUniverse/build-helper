@@ -35,9 +35,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- ACTIVITIONS -->
 		<license-enforce>false</license-enforce>
-		<!-- ACTIVITIONS - LICENSES -->
-		<license-prj-utils-approve>false</license-prj-utils-approve>
-		<license-apache2-approve>false</license-apache2-approve>
+		<automated-build>false</automated-build>
 		<!-- VERSIONS -->
 		<plugin-maven-help-version>3.2.0</plugin-maven-help-version>
 		<plugin-maven-clean-version>2.5</plugin-maven-clean-version>
@@ -135,24 +133,36 @@
 		<!-- LICENSES -->
 		<profile>
 			<id>license-check</id>
+			<properties>
+				<automated-build>true</automated-build>
+			</properties>
 			<build>
 				<defaultGoal>license:check</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.mycila</groupId>
 						<artifactId>license-maven-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 		<profile>
 			<id>license-update</id>
+			<properties>
+				<automated-build>true</automated-build>
+			</properties>
 			<build>
 				<defaultGoal>license:format</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.mycila</groupId>
 						<artifactId>license-maven-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -160,12 +170,6 @@
 		<profile>
 			<!-- APPROVE - RunedUniverse Utils Packages -->
 			<id>license-prj-utils-approve</id>
-			<activation>
-				<property>
-					<name>license-prj-utils-approve</name>
-					<value>true</value>
-				</property>
-			</activation>
 			<build>
 				<pluginManagement>
 					<plugins>
@@ -189,12 +193,6 @@
 		<profile>
 			<!-- APPROVE - Apache 2 -->
 			<id>license-apache2-approve</id>
-			<activation>
-				<property>
-					<name>license-apache2-approve</name>
-					<value>true</value>
-				</property>
-			</activation>
 			<build>
 				<pluginManagement>
 					<plugins>
@@ -243,16 +241,29 @@
 		<!-- JENKINS -->
 		<profile>
 			<id>jenkins-install</id>
+			<properties>
+				<automated-build>true</automated-build>
+			</properties>
 			<build>
 				<defaultGoal>clean gpg:sign install</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-clean-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-install-plugin</artifactId>
 						<configuration>
 							<skip>false</skip>
 						</configuration>
@@ -270,24 +281,23 @@
 							</execution>
 						</executions>
 					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
-					</plugin>
 				</plugins>
 			</build>
 		</profile>
 		<profile>
 			<id>jenkins-test-system</id>
+			<properties>
+				<automated-build>true</automated-build>
+			</properties>
 			<build>
 				<defaultGoal>test</defaultGoal>
 			</build>
 		</profile>
 		<profile>
 			<id>jenkins-deploy</id>
+			<properties>
+				<automated-build>true</automated-build>
+			</properties>
 			<build>
 				<defaultGoal>deploy</defaultGoal>
 				<plugins>
@@ -316,6 +326,9 @@
 		</profile>
 		<profile>
 			<id>jenkins-deploy-signed</id>
+			<properties>
+				<automated-build>true</automated-build>
+			</properties>
 			<build>
 				<defaultGoal>build-helper:attach-artifact deploy</defaultGoal>
 				<plugins>
@@ -324,6 +337,20 @@
 						<artifactId>maven-deploy-plugin</artifactId>
 						<configuration>
 							<skip>false</skip>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+							<artifacts>
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
+									<type>pom.asc</type>
+									<classifier></classifier>
+								</artifact>
+							</artifacts>
 						</configuration>
 					</plugin>
 					<plugin>
@@ -338,19 +365,6 @@
 								</goals>
 							</execution>
 						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<configuration>
-							<artifacts>
-								<artifact>
-									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
-									<type>pom.asc</type>
-									<classifier></classifier>
-								</artifact>
-							</artifacts>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -465,13 +479,16 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>${plugin-maven-clean-version}</version>
+					<configuration>
+						<skip>${automated-build}</skip>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
 					<version>${plugin-maven-install-version}</version>
 					<configuration>
-						<skip>true</skip>
+						<skip>${automated-build}</skip>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -479,6 +496,7 @@
 					<artifactId>license-maven-plugin</artifactId>
 					<version>${plugin-mycila-license-version}</version>
 					<configuration>
+						<skip>${automated-build}</skip>
 						<mapping>
 							<java>SLASHSTAR_STYLE</java>
 						</mapping>
@@ -501,7 +519,7 @@
 					<artifactId>maven-gpg-plugin</artifactId>
 					<version>${plugin-maven-gpg-version}</version>
 					<configuration>
-						<skip>true</skip>
+						<skip>${automated-build}</skip>
 						<homedir>/var/lib/jenkins/gpg</homedir>
 					</configuration>
 				</plugin>
@@ -509,13 +527,16 @@
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>${plugin-mojohaus-build-helper-version}</version>
+					<configuration>
+						<skip>${automated-build}</skip>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${plugin-maven-deploy-version}</version>
 					<configuration>
-						<skip>true</skip>
+						<skip>${automated-build}</skip>
 					</configuration>
 				</plugin>
 			</plugins>
