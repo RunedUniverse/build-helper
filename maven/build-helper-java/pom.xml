@@ -33,8 +33,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- ACTIVITIONS -->
-		<project-packaging>${project.packaging}</project-packaging>
 		<!-- VERSIONS -->
 		<java-source-version>1.8</java-source-version>
 		<java-target-version>${java-source-version}</java-target-version>
@@ -133,12 +131,6 @@
 		<!-- JENKINS -->
 		<profile>
 			<id>jenkins-install</id>
-			<activation>
-				<property>
-					<name>project-packaging</name>
-					<value>!pom</value>
-				</property>
-			</activation>
 			<build>
 				<defaultGoal>clean compile jar:jar source:jar-no-fork javadoc:jar gpg:sign install</defaultGoal>
 				<plugins>
@@ -227,12 +219,6 @@
 		</profile>
 		<profile>
 			<id>jenkins-deploy-signed</id>
-			<activation>
-				<property>
-					<name>project-packaging</name>
-					<value>!pom</value>
-				</property>
-			</activation>
 			<build>
 				<defaultGoal>build-helper:attach-artifact deploy</defaultGoal>
 				<plugins>

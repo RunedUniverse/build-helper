@@ -34,6 +34,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- ACTIVITIONS -->
+		<project-packaging>${project.packaging}</project-packaging>
 		<license-enforce>false</license-enforce>
 		<!-- ACTIVITIONS - LICENSES -->
 		<license-prj-utils-approve>false</license-prj-utils-approve>
