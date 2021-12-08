@@ -328,6 +328,15 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -360,6 +369,15 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>deploy</phase>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
@@ -379,6 +397,15 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>deploy</phase>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
@@ -439,6 +466,15 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>install</phase>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -465,6 +501,15 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>deploy</phase>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
@@ -480,20 +525,7 @@
 					<version>${plugin-maven-help-version}</version>
 					<executions>
 						<execution>
-							<id>install</id>
-							<phase>install</phase>
-							<goals>
-								<goal>all-profiles</goal>
-								<goal>active-profiles</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>deploy</id>
-							<phase>deploy</phase>
-							<goals>
-								<goal>all-profiles</goal>
-								<goal>active-profiles</goal>
-							</goals>
+							<phase>none</phase>
 						</execution>
 					</executions>
 				</plugin>
