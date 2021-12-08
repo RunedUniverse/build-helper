@@ -95,20 +95,6 @@
 					<url>https://nexus.runeduniverse.net/repository/maven-releases/</url>
 				</repository>
 			</distributionManagement>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-gpg-plugin</artifactId>
-							<configuration>
-								<repositoryId>runeduniverse-releases</repositoryId>
-								<url>https://nexus.runeduniverse.net/repository/maven-releases/</url>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
 		</profile>
 		<profile>
 			<id>repo-development</id>
@@ -118,20 +104,6 @@
 					<url>https://nexus.runeduniverse.net/repository/maven-development/</url>
 				</repository>
 			</distributionManagement>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-gpg-plugin</artifactId>
-							<configuration>
-								<repositoryId>runeduniverse-development</repositoryId>
-								<url>https://nexus.runeduniverse.net/repository/maven-development/</url>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
 		</profile>
 		<profile>
 			<id>repo-snapshots</id>
@@ -141,20 +113,6 @@
 					<url>https://nexus.runeduniverse.net/repository/maven-snapshots/</url>
 				</repository>
 			</distributionManagement>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-gpg-plugin</artifactId>
-							<configuration>
-								<repositoryId>runeduniverse-snapshots</repositoryId>
-								<url>https://nexus.runeduniverse.net/repository/maven-snapshots/</url>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
 		</profile>
 		<profile>
 			<id>repo-maven-central</id>
@@ -164,20 +122,6 @@
 					<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 				</repository>
 			</distributionManagement>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-gpg-plugin</artifactId>
-							<configuration>
-								<repositoryId>central-nexus</repositoryId>
-								<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
 		</profile>
 		<profile>
 			<id>repo-maven-central-snapshots</id>
@@ -187,20 +131,6 @@
 					<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
 				</snapshotRepository>
 			</distributionManagement>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-gpg-plugin</artifactId>
-							<configuration>
-								<repositoryId>central-nexus</repositoryId>
-								<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
 		</profile>
 		<!-- LICENSES -->
 		<profile>
@@ -323,6 +253,9 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -568,6 +501,7 @@
 					<artifactId>maven-gpg-plugin</artifactId>
 					<version>${plugin-maven-gpg-version}</version>
 					<configuration>
+						<skip>true</skip>
 						<homedir>/var/lib/jenkins/gpg</homedir>
 					</configuration>
 				</plugin>
