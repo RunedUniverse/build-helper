@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>net.runeduniverse.tools</groupId>
 		<artifactId>build-helper</artifactId>
-		<version>2021.12.06</version>
+		<version>2022.01.04</version>
 	</parent>
 
 	<artifactId>build-helper-java</artifactId>
@@ -89,66 +89,215 @@
 	</issueManagement>
 
 	<profiles>
-		<!-- JENKINS -->
+		<!-- ENVIRONMENTS -->
 		<profile>
-			<id>jenkins-install</id>
+			<id>jenkins</id>
 			<build>
-				<defaultGoal>clean compile jar:jar source:jar-no-fork javadoc:jar gpg:sign install</defaultGoal>
+				<defaultGoal>validate@pipeline initialize@pipeline generate-sources@pipeline process-sources@pipeline generate-resources@pipeline process-resources@pipeline
+			compile@pipeline process-classes@pipeline
+			generate-test-sources@pipeline process-test-sources@pipeline generate-test-resources@pipeline process-test-resources@pipeline
+			test-compile@pipeline process-test-classes@pipeline test@pipeline
+			prepare-package@pipeline package@pipeline
+			pre-integration-test@pipeline integration-test@pipeline post-integration-test@pipeline
+			verify@pipeline install@pipeline deploy@pipeline</defaultGoal>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-compiler-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jar-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-source-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<!-- re-configured -->
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>build-helper-maven-plugin</artifactId>
+							<configuration>
+								<artifacts>
+									<!-- gpg signatures -->
+									<artifact>
+										<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
+										<type>pom.asc</type>
+									</artifact>
+									<artifact>
+										<file>${project.build.directory}/${project.build.finalName}.jar.asc</file>
+										<type>jar.asc</type>
+									</artifact>
+									<!-- javadoc -->
+									<artifact>
+										<file>${project.build.directory}/${project.build.finalName}-javadoc.jar</file>
+										<type>jar</type>
+										<classifier>javadoc</classifier>
+									</artifact>
+									<artifact>
+										<file>${project.build.directory}/${project.build.finalName}-javadoc.jar.asc</file>
+										<type>jar.asc</type>
+										<classifier>javadoc</classifier>
+									</artifact>
+									<!-- sources -->
+									<artifact>
+										<file>${project.build.directory}/${project.build.finalName}-sources.jar</file>
+										<type>jar</type>
+										<classifier>sources</classifier>
+									</artifact>
+									<artifact>
+										<file>${project.build.directory}/${project.build.finalName}-sources.jar.asc</file>
+										<type>jar.asc</type>
+										<classifier>sources</classifier>
+									</artifact>
+								</artifacts>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+
+		<!-- ACTIONS -->
+		<profile>
+			<id>install</id>
+			<build>
+				<defaultGoal>clean compile package install</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-compiler-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>compile</phase>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jar-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<configuration>
-							<skipSource>false</skipSource>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 		<profile>
-			<id>jenkins-test-system</id>
+			<id>test</id>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 		<profile>
-			<id>jenkins-deploy-signed</id>
+			<id>deploy-signed</id>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
 						<configuration>
-							<skip>false</skip>
 							<artifacts>
 								<!-- gpg signatures -->
 								<artifact>
@@ -183,6 +332,16 @@
 								</artifact>
 							</artifacts>
 						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>test</phase>
+								<goals>
+									<goal>test</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -252,7 +411,6 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>${plugin-maven-compiler-version}</version>
 					<configuration>
-						<skip>${automated-build}</skip>
 						<source>${java-source-version}</source>
 						<target>${java-target-version}</target>
 					</configuration>
@@ -261,33 +419,22 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>${plugin-maven-jar-version}</version>
-					<configuration>
-						<skip>${automated-build}</skip>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
 					<version>${plugin-maven-source-version}</version>
-					<configuration>
-						<skipSource>${automated-build}</skipSource>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
 					<version>${plugin-maven-javadoc-version}</version>
-					<configuration>
-						<skip>${automated-build}</skip>
-						<skip>true</skip>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${plugin-maven-surefire-version}</version>
 					<configuration>
-						<skip>${automated-build}</skip>
 						<trimStackTrace>false</trimStackTrace>
 					</configuration>
 					<dependencies>

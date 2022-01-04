@@ -21,7 +21,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.runeduniverse.tools</groupId>
 	<artifactId>build-helper</artifactId>
-	<version>2021.12.06</version>
+	<version>2022.01.04</version>
 	<packaging>pom</packaging>
 	<name>Build Helper</name>
 	<description>contains dependency management for build/install/deploy of maven projects</description>
@@ -35,7 +35,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- ACTIVITIONS -->
 		<license-enforce>false</license-enforce>
-		<automated-build>false</automated-build>
 		<!-- VERSIONS -->
 		<plugin-maven-help-version>3.2.0</plugin-maven-help-version>
 		<plugin-maven-clean-version>2.5</plugin-maven-clean-version>
@@ -133,36 +132,24 @@
 		<!-- LICENSES -->
 		<profile>
 			<id>license-check</id>
-			<properties>
-				<automated-build>true</automated-build>
-			</properties>
 			<build>
 				<defaultGoal>license:check</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.mycila</groupId>
 						<artifactId>license-maven-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
 		</profile>
 		<profile>
 			<id>license-update</id>
-			<properties>
-				<automated-build>true</automated-build>
-			</properties>
 			<build>
 				<defaultGoal>license:format</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>com.mycila</groupId>
 						<artifactId>license-maven-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -238,35 +225,152 @@
 				</pluginManagement>
 			</build>
 		</profile>
-		<!-- JENKINS -->
+		<!-- ENVIRONMENTS -->
 		<profile>
-			<id>jenkins-install</id>
-			<properties>
-				<automated-build>true</automated-build>
-			</properties>
+			<id>jenkins</id>
 			<build>
-				<defaultGoal>clean gpg:sign install</defaultGoal>
+				<defaultGoal>validate@pipeline initialize@pipeline generate-sources@pipeline process-sources@pipeline generate-resources@pipeline process-resources@pipeline
+			compile@pipeline process-classes@pipeline
+			generate-test-sources@pipeline process-test-sources@pipeline generate-test-resources@pipeline process-test-resources@pipeline
+			test-compile@pipeline process-test-classes@pipeline test@pipeline
+			prepare-package@pipeline package@pipeline
+			pre-integration-test@pipeline integration-test@pipeline post-integration-test@pipeline
+			verify@pipeline install@pipeline deploy@pipeline</defaultGoal>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-help-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-clean-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-install-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>com.mycila</groupId>
+							<artifactId>license-maven-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-gpg-plugin</artifactId>
+							<inherited>true</inherited>
+							<configuration>
+								<homedir>/var/lib/jenkins/gpg</homedir>
+							</configuration>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>build-helper-maven-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-deploy-plugin</artifactId>
+							<inherited>true</inherited>
+							<executions>
+								<execution>
+									<id>pipeline</id>
+									<inherited>true</inherited>
+									<phase>none</phase>
+								</execution>
+							</executions>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+
+		<!-- ACTIONS -->
+		<profile>
+			<id>install</id>
+			<build>
+				<defaultGoal>clean verify install</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-clean-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>initialize</phase>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-install-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>install</phase>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -285,28 +389,26 @@
 			</build>
 		</profile>
 		<profile>
-			<id>jenkins-test-system</id>
-			<properties>
-				<automated-build>true</automated-build>
-			</properties>
+			<id>test</id>
 			<build>
 				<defaultGoal>test</defaultGoal>
 			</build>
 		</profile>
 		<profile>
-			<id>jenkins-deploy</id>
-			<properties>
-				<automated-build>true</automated-build>
-			</properties>
+			<id>deploy</id>
 			<build>
 				<defaultGoal>deploy</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>deploy</phase>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -325,25 +427,14 @@
 			</build>
 		</profile>
 		<profile>
-			<id>jenkins-deploy-signed</id>
-			<properties>
-				<automated-build>true</automated-build>
-			</properties>
+			<id>deploy-signed</id>
 			<build>
-				<defaultGoal>build-helper:attach-artifact deploy</defaultGoal>
+				<defaultGoal>verify deploy</defaultGoal>
 				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-deploy-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
-					</plugin>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
 						<artifactId>build-helper-maven-plugin</artifactId>
 						<configuration>
-							<skip>false</skip>
 							<artifacts>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
@@ -352,6 +443,27 @@
 								</artifact>
 							</artifacts>
 						</configuration>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>verify</phase>
+								<goals>
+									<goal>attach-artifact</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>pipeline</id>
+								<inherited>true</inherited>
+								<phase>deploy</phase>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -425,9 +537,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-install-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -479,24 +588,17 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>${plugin-maven-clean-version}</version>
-					<configuration>
-						<skip>${automated-build}</skip>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
 					<version>${plugin-maven-install-version}</version>
-					<configuration>
-						<skip>${automated-build}</skip>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>com.mycila</groupId>
 					<artifactId>license-maven-plugin</artifactId>
 					<version>${plugin-mycila-license-version}</version>
 					<configuration>
-						<skip>${automated-build}</skip>
 						<mapping>
 							<java>SLASHSTAR_STYLE</java>
 						</mapping>
@@ -518,26 +620,16 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
 					<version>${plugin-maven-gpg-version}</version>
-					<configuration>
-						<skip>${automated-build}</skip>
-						<homedir>/var/lib/jenkins/gpg</homedir>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>${plugin-mojohaus-build-helper-version}</version>
-					<configuration>
-						<skip>${automated-build}</skip>
-					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${plugin-maven-deploy-version}</version>
-					<configuration>
-						<skip>${automated-build}</skip>
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
