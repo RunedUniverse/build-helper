@@ -115,6 +115,14 @@
 									<goal>compile</goal>
 								</goals>
 							</execution>
+							<execution>
+								<id>jenkins-testing</id>
+								<inherited>true</inherited>
+								<phase>test-compile</phase>
+								<goals>
+									<goal>testCompile</goal>
+								</goals>
+							</execution>
 						</executions>
 					</plugin>
 					<plugin>
@@ -129,6 +137,14 @@
 									<goal>jar</goal>
 								</goals>
 							</execution>
+							<execution>
+								<id>jenkins-testing</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>test-jar</goal>
+								</goals>
+							</execution>
 						</executions>
 					</plugin>
 					<plugin>
@@ -141,6 +157,14 @@
 								<phase>package</phase>
 								<goals>
 									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>jenkins-testing</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>test-jar-no-fork</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -174,7 +198,7 @@
 						<artifactId>maven-surefire-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>jenkins</id>
+								<id>jenkins-testing</id>
 								<inherited>true</inherited>
 								<phase>test</phase>
 								<goals>
@@ -316,6 +340,11 @@
 					<executions>
 						<execution>
 							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+						<execution>
+							<id>jenkins-testing</id>
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>
