@@ -38,6 +38,7 @@
 		<!-- VERSIONS -->
 		<plugin-maven-help-version>3.2.0</plugin-maven-help-version>
 		<plugin-maven-clean-version>2.5</plugin-maven-clean-version>
+		<plugin-maven-resources-version>3.2.0</plugin-maven-resources-version>
 		<plugin-maven-install-version>2.4</plugin-maven-install-version>
 		<plugin-mycila-license-version>4.2.rc1</plugin-mycila-license-version>
 		<plugin-maven-gpg-version>3.0.1</plugin-maven-gpg-version>
@@ -231,6 +232,7 @@
 			<build>
 				<defaultGoal>
 					org.apache.maven.plugins:maven-clean-plugin:clean
+					org.apache.maven.plugins:maven-resources-plugin:resources
 					org.apache.maven.plugins:maven-gpg-plugin:sign
 					org.apache.maven.plugins:maven-install-plugin:install
 				</defaultGoal>
@@ -245,6 +247,28 @@
 								<phase>initialize</phase>
 								<goals>
 									<goal>clean</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-resources-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>jenkins</id>
+								<inherited>true</inherited>
+								<phase>process-resources</phase>
+								<goals>
+									<goal>resources</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>jenkins-testing</id>
+								<inherited>true</inherited>
+								<phase>process-test-resources</phase>
+								<goals>
+									<goal>testResources</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -506,6 +530,23 @@
 					<executions>
 						<execution>
 							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>${plugin-maven-resources-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+						<execution>
+							<id>jenkins-testing</id>
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>
