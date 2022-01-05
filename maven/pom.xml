@@ -225,118 +225,27 @@
 				</pluginManagement>
 			</build>
 		</profile>
-		<!-- ENVIRONMENTS -->
-		<profile>
-			<id>jenkins</id>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-help-plugin</artifactId>
-							<inherited>true</inherited>
-							<executions>
-								<execution>
-									<id>pipeline</id>
-									<inherited>true</inherited>
-									<phase>none</phase>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-clean-plugin</artifactId>
-							<inherited>true</inherited>
-							<executions>
-								<execution>
-									<id>pipeline</id>
-									<inherited>true</inherited>
-									<phase>none</phase>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-install-plugin</artifactId>
-							<inherited>true</inherited>
-							<executions>
-								<execution>
-									<id>pipeline</id>
-									<inherited>true</inherited>
-									<phase>none</phase>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>com.mycila</groupId>
-							<artifactId>license-maven-plugin</artifactId>
-							<inherited>true</inherited>
-							<executions>
-								<execution>
-									<id>pipeline</id>
-									<inherited>true</inherited>
-									<phase>none</phase>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-gpg-plugin</artifactId>
-							<inherited>true</inherited>
-							<configuration>
-								<homedir>/var/lib/jenkins/gpg</homedir>
-							</configuration>
-							<executions>
-								<execution>
-									<id>pipeline</id>
-									<inherited>true</inherited>
-									<phase>none</phase>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>build-helper-maven-plugin</artifactId>
-							<inherited>true</inherited>
-							<executions>
-								<execution>
-									<id>pipeline</id>
-									<inherited>true</inherited>
-									<phase>none</phase>
-								</execution>
-							</executions>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-deploy-plugin</artifactId>
-							<inherited>true</inherited>
-							<executions>
-								<execution>
-									<id>pipeline</id>
-									<inherited>true</inherited>
-									<phase>none</phase>
-								</execution>
-							</executions>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-
 		<!-- ACTIONS -->
 		<profile>
 			<id>install</id>
 			<build>
-				<defaultGoal>clean verify install</defaultGoal>
+				<defaultGoal>
+					org.apache.maven.plugins:maven-clean-plugin:clean
+					org.apache.maven.plugins:maven-gpg-plugin:sign
+					org.apache.maven.plugins:maven-install-plugin:install
+				</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-clean-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>pipeline</id>
+								<id>jenkins</id>
 								<inherited>true</inherited>
 								<phase>initialize</phase>
+								<goals>
+									<goal>clean</goal>
+								</goals>
 							</execution>
 						</executions>
 					</plugin>
@@ -345,7 +254,7 @@
 						<artifactId>maven-gpg-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>pipeline</id>
+								<id>jenkins</id>
 								<inherited>true</inherited>
 								<phase>verify</phase>
 								<goals>
@@ -359,9 +268,12 @@
 						<artifactId>maven-install-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>pipeline</id>
+								<id>jenkins</id>
 								<inherited>true</inherited>
 								<phase>install</phase>
+								<goals>
+									<goal>install</goal>
+								</goals>
 							</execution>
 						</executions>
 					</plugin>
@@ -372,8 +284,8 @@
 							<execution>
 								<phase>install</phase>
 								<goals>
-									<goal>all-profiles</goal>
 									<goal>active-profiles</goal>
+									<goal>all-profiles</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -382,24 +294,23 @@
 			</build>
 		</profile>
 		<profile>
-			<id>test</id>
-			<build>
-				<defaultGoal>test</defaultGoal>
-			</build>
-		</profile>
-		<profile>
 			<id>deploy</id>
 			<build>
-				<defaultGoal>deploy</defaultGoal>
+				<defaultGoal>
+					org.apache.maven.plugins:maven-deploy-plugin:deploy
+				</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-deploy-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>pipeline</id>
+								<id>jenkins</id>
 								<inherited>true</inherited>
 								<phase>deploy</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
 							</execution>
 						</executions>
 					</plugin>
@@ -422,7 +333,10 @@
 		<profile>
 			<id>deploy-signed</id>
 			<build>
-				<defaultGoal>verify deploy</defaultGoal>
+				<defaultGoal>
+					org.codehaus.mojo:build-helper-maven-plugin:attach-artifact
+					org.apache.maven.plugins:maven-deploy-plugin:deploy
+				</defaultGoal>
 				<plugins>
 					<plugin>
 						<groupId>org.codehaus.mojo</groupId>
@@ -438,7 +352,7 @@
 						</configuration>
 						<executions>
 							<execution>
-								<id>pipeline</id>
+								<id>jenkins</id>
 								<inherited>true</inherited>
 								<phase>verify</phase>
 								<goals>
@@ -452,9 +366,12 @@
 						<artifactId>maven-deploy-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>pipeline</id>
+								<id>jenkins</id>
 								<inherited>true</inherited>
 								<phase>deploy</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
 							</execution>
 						</executions>
 					</plugin>
@@ -575,22 +492,48 @@
 						<execution>
 							<phase>none</phase>
 						</execution>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
 					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>${plugin-maven-clean-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-install-plugin</artifactId>
 					<version>${plugin-maven-install-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>com.mycila</groupId>
 					<artifactId>license-maven-plugin</artifactId>
 					<version>${plugin-mycila-license-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+					</executions>
 					<configuration>
 						<mapping>
 							<java>SLASHSTAR_STYLE</java>
@@ -613,16 +556,40 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-gpg-plugin</artifactId>
 					<version>${plugin-maven-gpg-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<configuration>
+								<homedir>/var/lib/jenkins/gpg</homedir>
+							</configuration>
+							<phase>none</phase>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
 					<version>${plugin-mojohaus-build-helper-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+					</executions>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-deploy-plugin</artifactId>
 					<version>${plugin-maven-deploy-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>
