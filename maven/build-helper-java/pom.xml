@@ -209,19 +209,21 @@
 								</goals>
 							</execution>
 						</executions>
-					<configuration>
-						<trimStackTrace>false</trimStackTrace>
-					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>org.junit.jupiter</groupId>
-							<artifactId>junit-jupiter-engine</artifactId>
-						</dependency>
-						<dependency>
-							<groupId>org.junit.platform</groupId>
-							<artifactId>junit-platform-surefire-provider</artifactId>
-						</dependency>
-					</dependencies>
+						<configuration>
+							<trimStackTrace>false</trimStackTrace>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>org.junit.jupiter</groupId>
+								<artifactId>junit-jupiter-engine</artifactId>
+								<version>${junit-jupiter-engine-version}</version>
+							</dependency>
+							<dependency>
+								<groupId>org.junit.platform</groupId>
+								<artifactId>junit-platform-surefire-provider</artifactId>
+								<version>${junit-platform-surefire-provider-version}</version>
+							</dependency>
+						</dependencies>
 					</plugin>
 				</plugins>
 			</build>
@@ -368,18 +370,6 @@
 					<configuration>
 						<trimStackTrace>false</trimStackTrace>
 					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>org.junit.jupiter</groupId>
-							<artifactId>junit-jupiter-engine</artifactId>
-							<version>${junit-jupiter-engine-version}</version>
-						</dependency>
-						<dependency>
-							<groupId>org.junit.platform</groupId>
-							<artifactId>junit-platform-surefire-provider</artifactId>
-							<version>${junit-platform-surefire-provider-version}</version>
-						</dependency>
-					</dependencies>
 				</plugin>
 				<!-- re-configured -->
 				<plugin>
