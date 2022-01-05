@@ -229,13 +229,6 @@
 		<profile>
 			<id>jenkins</id>
 			<build>
-				<defaultGoal>validate@pipeline initialize@pipeline generate-sources@pipeline process-sources@pipeline generate-resources@pipeline process-resources@pipeline
-			compile@pipeline process-classes@pipeline
-			generate-test-sources@pipeline process-test-sources@pipeline generate-test-resources@pipeline process-test-resources@pipeline
-			test-compile@pipeline process-test-classes@pipeline test@pipeline
-			prepare-package@pipeline package@pipeline
-			pre-integration-test@pipeline integration-test@pipeline post-integration-test@pipeline
-			verify@pipeline install@pipeline deploy@pipeline</defaultGoal>
 				<pluginManagement>
 					<plugins>
 						<plugin>
