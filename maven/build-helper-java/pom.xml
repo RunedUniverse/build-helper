@@ -187,7 +187,7 @@
 			</build>
 		</profile>
 		<profile>
-			<id>test</id>
+			<id>test-junit-jupiter</id>
 			<build>
 				<defaultGoal>
 					org.apache.maven.plugins:maven-surefire-plugin:test
@@ -206,6 +206,19 @@
 								</goals>
 							</execution>
 						</executions>
+					<configuration>
+						<trimStackTrace>false</trimStackTrace>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.junit.jupiter</groupId>
+							<artifactId>junit-jupiter-engine</artifactId>
+						</dependency>
+						<dependency>
+							<groupId>org.junit.platform</groupId>
+							<artifactId>junit-platform-surefire-provider</artifactId>
+						</dependency>
+					</dependencies>
 					</plugin>
 				</plugins>
 			</build>
