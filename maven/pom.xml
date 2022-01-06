@@ -46,6 +46,7 @@
 		<plugin-maven-deploy-version>3.0.0-M2</plugin-maven-deploy-version>
 		<!-- TRACING -->
 		<tracing-log-path>target/trace</tracing-log-path>
+		<tracing-prefix></tracing-prefix>
 		<tracing-stage>full</tracing-stage>
 	</properties>
 
@@ -538,7 +539,7 @@
 						</execution>
 					</executions>
 					<configuration>
-						<output>${tracing-log-path}/${tracing-stage}-eff-pom.xml</output>
+						<output>${tracing-log-path}/${tracing-prefix}${tracing-stage}-eff-pom.xml</output>
 						<verbose>true</verbose>
 					</configuration>
 				</plugin>
