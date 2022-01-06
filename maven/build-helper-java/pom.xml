@@ -94,6 +94,7 @@
 			<id>install</id>
 			<build>
 				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
 					org.apache.maven.plugins:maven-clean-plugin:clean
 					org.apache.maven.plugins:maven-resources-plugin:resources
 					org.apache.maven.plugins:maven-compiler-plugin:compile
@@ -191,8 +192,12 @@
 		</profile>
 		<profile>
 			<id>test-junit-jupiter</id>
+			<properties>
+				<tracing-stage>test-junit-jupiter</tracing-stage>
+			</properties>
 			<build>
 				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
 					org.apache.maven.plugins:maven-surefire-plugin:test
 				</defaultGoal>
 				<plugins>
@@ -260,6 +265,7 @@
 			<id>deploy-signed</id>
 			<build>
 				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
 					org.codehaus.mojo:build-helper-maven-plugin:attach-artifact
 					org.apache.maven.plugins:maven-deploy-plugin:deploy
 				</defaultGoal>

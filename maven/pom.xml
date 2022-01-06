@@ -44,6 +44,9 @@
 		<plugin-maven-gpg-version>3.0.1</plugin-maven-gpg-version>
 		<plugin-mojohaus-build-helper-version>3.2.0</plugin-mojohaus-build-helper-version>
 		<plugin-maven-deploy-version>3.0.0-M2</plugin-maven-deploy-version>
+		<!-- TRACING -->
+		<tracing-log-path>target/trace</tracing-log-path>
+		<tracing-stage>full</tracing-stage>
 	</properties>
 
 	<licenses>
@@ -229,8 +232,12 @@
 		<!-- ACTIONS -->
 		<profile>
 			<id>install</id>
+			<properties>
+				<tracing-stage>install</tracing-stage>
+			</properties>
 			<build>
 				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
 					org.apache.maven.plugins:maven-clean-plugin:clean
 					org.apache.maven.plugins:maven-resources-plugin:resources
 					org.apache.maven.plugins:maven-gpg-plugin:sign
@@ -319,8 +326,12 @@
 		</profile>
 		<profile>
 			<id>deploy</id>
+			<properties>
+				<tracing-stage>deploy</tracing-stage>
+			</properties>
 			<build>
 				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
 					org.apache.maven.plugins:maven-deploy-plugin:deploy
 				</defaultGoal>
 				<plugins>
@@ -356,8 +367,12 @@
 		</profile>
 		<profile>
 			<id>deploy-signed</id>
+			<properties>
+				<tracing-stage>deploy-signed</tracing-stage>
+			</properties>
 			<build>
 				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
 					org.codehaus.mojo:build-helper-maven-plugin:attach-artifact
 					org.apache.maven.plugins:maven-deploy-plugin:deploy
 				</defaultGoal>
@@ -522,6 +537,10 @@
 							<phase>none</phase>
 						</execution>
 					</executions>
+					<configuration>
+						<output>${tracing-log-path}/${tracing-stage}-eff-pom.xml</output>
+						<verbose>true</verbose>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
