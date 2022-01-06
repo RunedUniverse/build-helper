@@ -540,7 +540,6 @@
 					</executions>
 					<configuration>
 						<output>${tracing-log-path}/${tracing-prefix}${tracing-stage}-eff-pom.xml</output>
-						<verbose>true</verbose>
 					</configuration>
 				</plugin>
 				<plugin>
