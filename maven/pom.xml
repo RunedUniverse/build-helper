@@ -46,7 +46,6 @@
 		<plugin-maven-deploy-version>3.0.0-M2</plugin-maven-deploy-version>
 		<!-- TRACING -->
 		<tracing-log-path>target/trace</tracing-log-path>
-		<tracing-prefix></tracing-prefix>
 		<tracing-stage>full</tracing-stage>
 	</properties>
 
@@ -537,9 +536,17 @@
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>
+						<execution>
+							<id>jenkins-tracing</id>
+							<inherited>true</inherited>
+							<configuration>
+								<artifact>${project.groupId}:${project.artifactId}</artifact>
+								<output>${tracing-log-path}/${project.artifactId}#${tracing-stage}-eff-pom.xml</output>
+							</configuration>
+						</execution>
 					</executions>
 					<configuration>
-						<output>${tracing-log-path}/${tracing-prefix}${tracing-stage}-eff-pom.xml</output>
+						<output>${tracing-log-path}/${tracing-stage}-eff-pom.xml</output>
 					</configuration>
 				</plugin>
 				<plugin>
