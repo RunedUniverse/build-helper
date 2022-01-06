@@ -258,6 +258,20 @@
 							</dependency>
 						</dependencies>
 					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>jenkins-tracing</id>
+								<inherited>true</inherited>
+								<configuration>
+									<artifact>${project.groupId}:${project.artifactId}</artifact>
+									<output>${tracing-log-path}/${project.artifactId}#${tracing-stage}-eff-pom.xml</output>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
