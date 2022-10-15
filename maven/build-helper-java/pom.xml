@@ -22,7 +22,7 @@
 	<parent>
 		<groupId>net.runeduniverse.tools</groupId>
 		<artifactId>build-helper</artifactId>
-		<version>2022.10.15</version>
+		<version>2022.08.13</version>
 	</parent>
 
 	<artifactId>build-helper-java</artifactId>
@@ -256,73 +256,6 @@
 			</build>
 		</profile>
 		<profile>
-			<id>deploy</id>
-			<build>
-				<defaultGoal>
-					org.apache.maven.plugins:maven-help-plugin:effective-pom
-					org.codehaus.mojo:build-helper-maven-plugin:attach-artifact
-					org.apache.maven.plugins:maven-deploy-plugin:deploy
-				</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-help-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>package</phase>
-								<goals>
-									<goal>all-profiles</goal>
-									<goal>active-profiles</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<!-- re-configured -->
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<!-- must be here or it gets overridden! -->
-								<id>jenkins</id>
-								<inherited>true</inherited>
-								<phase>package</phase>
-								<goals>
-									<goal>attach-artifact</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<artifacts>
-								<!-- pom -->
-								<artifact>
-									<file>${project.build.directory}/${project.build.finalName}.pom</file>
-									<type>pom</type>
-								</artifact>
-								<!-- jar -->
-								<artifact>
-									<file>${project.build.directory}/${project.build.finalName}.jar</file>
-									<type>jar</type>
-								</artifact>
-								<!-- javadoc -->
-								<artifact>
-									<file>${project.build.directory}/${project.build.finalName}-javadoc.jar</file>
-									<type>jar</type>
-									<classifier>javadoc</classifier>
-								</artifact>
-								<!-- sources -->
-								<artifact>
-									<file>${project.build.directory}/${project.build.finalName}-sources.jar</file>
-									<type>jar</type>
-									<classifier>sources</classifier>
-								</artifact>
-							</artifacts>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
 			<id>deploy-signed</id>
 			<build>
 				<defaultGoal>
@@ -353,7 +286,7 @@
 								<!-- must be here or it gets overridden! -->
 								<id>jenkins</id>
 								<inherited>true</inherited>
-								<phase>package</phase>
+								<phase>verify</phase>
 								<goals>
 									<goal>attach-artifact</goal>
 								</goals>
@@ -362,19 +295,9 @@
 						<configuration>
 							<artifacts>
 								<!-- gpg signatures -->
-								<!-- pom -->
-								<artifact>
-									<file>${project.build.directory}/${project.build.finalName}.pom</file>
-									<type>pom</type>
-								</artifact>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
 									<type>pom.asc</type>
-								</artifact>
-								<!-- jar -->
-								<artifact>
-									<file>${project.build.directory}/${project.build.finalName}.jar</file>
-									<type>jar</type>
 								</artifact>
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.jar.asc</file>
