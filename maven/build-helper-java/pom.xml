@@ -1,6 +1,6 @@
 <!--
 
-    Copyright © 2021 Pl4yingNight (pl4yingnight@gmail.com)
+    Copyright © 2022 Pl4yingNight (pl4yingnight@gmail.com)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,14 +15,12 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.runeduniverse.tools</groupId>
 		<artifactId>build-helper</artifactId>
-		<version>2022.08.13</version>
+		<version>2022.10.15</version>
 	</parent>
 
 	<artifactId>build-helper-java</artifactId>
@@ -256,10 +254,58 @@
 			</build>
 		</profile>
 		<profile>
+			<id>deploy</id>
+			<build>
+				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
+					org.apache.maven.plugins:maven-jar-plugin:jar
+					org.apache.maven.plugins:maven-deploy-plugin:deploy
+				</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>jenkins</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>jenkins-testing</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>test-jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
 			<id>deploy-signed</id>
 			<build>
 				<defaultGoal>
 					org.apache.maven.plugins:maven-help-plugin:effective-pom
+					org.apache.maven.plugins:maven-jar-plugin:jar
 					org.codehaus.mojo:build-helper-maven-plugin:attach-artifact
 					org.apache.maven.plugins:maven-deploy-plugin:deploy
 				</defaultGoal>
@@ -273,6 +319,28 @@
 								<goals>
 									<goal>all-profiles</goal>
 									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>jenkins</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>jenkins-testing</id>
+								<inherited>true</inherited>
+								<phase>package</phase>
+								<goals>
+									<goal>test-jar</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -388,6 +456,11 @@
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>
+						<execution>
+							<id>jenkins-testing</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
 					</executions>
 					<configuration>
 						<source>${java-source-version}</source>
@@ -404,6 +477,11 @@
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>
+						<execution>
+							<id>jenkins-testing</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
 					</executions>
 				</plugin>
 				<plugin>
@@ -416,6 +494,11 @@
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>
+						<execution>
+							<id>jenkins-testing</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
 					</executions>
 				</plugin>
 				<plugin>
@@ -425,6 +508,11 @@
 					<executions>
 						<execution>
 							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+						<execution>
+							<id>jenkins-testing</id>
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>

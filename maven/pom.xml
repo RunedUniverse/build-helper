@@ -15,22 +15,18 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.runeduniverse.tools</groupId>
 	<artifactId>build-helper</artifactId>
-	<version>2022.08.13</version>
+	<version>2022.10.15</version>
 	<packaging>pom</packaging>
 	<name>Build Helper</name>
 	<description>contains dependency management for build/install/deploy of maven projects</description>
 	<inceptionYear>2021</inceptionYear>
-
 	<modules>
 		<module>build-helper-java</module>
 	</modules>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- ACTIVITIONS -->
@@ -48,19 +44,16 @@
 		<tracing-log-path>target/trace</tracing-log-path>
 		<tracing-stage>full</tracing-stage>
 	</properties>
-
 	<licenses>
 		<license>
 			<name>Apache License, Version 2</name>
 			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
 		</license>
 	</licenses>
-
 	<organization>
 		<name>RunedUniverse</name>
 		<url>https://www.runeduniverse.net</url>
 	</organization>
-
 	<developers>
 		<developer>
 			<id>pl4yingnight</id>
@@ -75,7 +68,6 @@
 			</roles>
 		</developer>
 	</developers>
-
 	<scm>
 		<url>https://github.com/RunedUniverse/build-helper</url>
 		<connection>scm:git:git://github.com/RunedUniverse/build-helper.git</connection>
@@ -85,7 +77,6 @@
 		<system>GitHub Issues</system>
 		<url>https://github.com/RunedUniverse/build-helper/issues</url>
 	</issueManagement>
-
 	<profiles>
 		<!-- DISTRIBUTION -->
 		<profile>
@@ -463,7 +454,7 @@
 						<artifactId>license-maven-plugin</artifactId>
 						<configuration>
 							<properties>
-								<year>2021</year>
+								<year>2022</year>
 								<owner>Pl4yingNight</owner>
 								<email>pl4yingnight@gmail.com</email>
 							</properties>
@@ -535,7 +526,6 @@
 			</build>
 		</profile>
 	</profiles>
-
 	<build>
 		<pluginManagement>
 			<plugins>
