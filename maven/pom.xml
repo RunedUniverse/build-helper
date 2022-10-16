@@ -78,9 +78,38 @@
 		<url>https://github.com/RunedUniverse/build-helper/issues</url>
 	</issueManagement>
 	<profiles>
-		<!-- DISTRIBUTION -->
+		<!-- REPOSITORIES -->
 		<profile>
 			<id>repo-releases</id>
+			<repositories>
+				<repository>
+					<id>runeduniverse-releases</id>
+					<url>https://nexus.runeduniverse.net/repository/maven-releases/</url>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<!-- dev-repo contains: build-helper-java & development builds -->
+			<id>repo-development</id>
+			<repositories>
+				<repository>
+					<id>runeduniverse-development</id>
+					<url>https://nexus.runeduniverse.net/repository/maven-development/</url>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>repo-snapshots</id>
+			<repositories>
+				<repository>
+					<id>runeduniverse-snapshots</id>
+					<url>https://nexus.runeduniverse.net/repository/maven-snapshots/</url>
+				</repository>
+			</repositories>
+		</profile>
+		<!-- DISTRIBUTION REPOSITORIES -->
+		<profile>
+			<id>dist-repo-releases</id>
 			<distributionManagement>
 				<repository>
 					<id>runeduniverse-releases</id>
@@ -89,7 +118,7 @@
 			</distributionManagement>
 		</profile>
 		<profile>
-			<id>repo-development</id>
+			<id>dist-repo-development</id>
 			<distributionManagement>
 				<repository>
 					<id>runeduniverse-development</id>
@@ -98,7 +127,7 @@
 			</distributionManagement>
 		</profile>
 		<profile>
-			<id>repo-snapshots</id>
+			<id>dist-repo-snapshots</id>
 			<distributionManagement>
 				<repository>
 					<id>runeduniverse-snapshots</id>
@@ -107,7 +136,7 @@
 			</distributionManagement>
 		</profile>
 		<profile>
-			<id>repo-maven-central</id>
+			<id>dist-repo-maven-central</id>
 			<distributionManagement>
 				<repository>
 					<id>central-nexus</id>
@@ -116,7 +145,7 @@
 			</distributionManagement>
 		</profile>
 		<profile>
-			<id>repo-maven-central-snapshots</id>
+			<id>dist-repo-maven-central-snapshots</id>
 			<distributionManagement>
 				<snapshotRepository>
 					<id>central-nexus</id>
