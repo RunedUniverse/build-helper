@@ -31,7 +31,7 @@ pipeline {
 			    stage('Maven') {
 			        steps {
 			        	dir(path: 'maven') {
-			        		sh 'mvn -P repo-development,helper-deploy'
+			        		sh 'mvn -P dist-repo-development,helper-deploy'
 			        	}						
 					}
 			    }
