@@ -402,10 +402,83 @@
 						<artifactId>build-helper-maven-plugin</artifactId>
 						<configuration>
 							<artifacts>
+								<!-- gpg signature -->
 								<artifact>
 									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
 									<type>pom.asc</type>
-									<classifier></classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+						<executions>
+							<execution>
+								<id>jenkins</id>
+								<inherited>true</inherited>
+								<phase>verify</phase>
+								<goals>
+									<goal>attach-artifact</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>jenkins</id>
+								<inherited>true</inherited>
+								<phase>deploy</phase>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-help-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>deploy</phase>
+								<goals>
+									<goal>all-profiles</goal>
+									<goal>active-profiles</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>jenkins-tracing</id>
+								<inherited>true</inherited>
+								<configuration>
+									<artifact>${project.groupId}:${project.artifactId}</artifact>
+									<output>${tracing-log-path}/${project.artifactId}#${tracing-stage}-eff-pom.xml</output>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>deploy-pom-signed</id>
+			<properties>
+				<tracing-stage>deploy-pom-signed</tracing-stage>
+			</properties>
+			<build>
+				<defaultGoal>
+					org.apache.maven.plugins:maven-help-plugin:effective-pom
+					org.codehaus.mojo:build-helper-maven-plugin:attach-artifact
+					org.apache.maven.plugins:maven-deploy-plugin:deploy
+				</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<configuration>
+							<artifacts>
+								<!-- gpg signature -->
+								<artifact>
+									<file>${project.build.directory}/${project.build.finalName}.pom.asc</file>
+									<type>pom.asc</type>
 								</artifact>
 							</artifacts>
 						</configuration>
