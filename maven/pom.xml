@@ -664,6 +664,8 @@
 							<inherited>true</inherited>
 							<configuration>
 								<homedir>/srv/jenkins/gpg</homedir>
+								<keyname>9CB231CE2918B342</keyname>
+								<passphraseServerId>gpg-signature-software</passphraseServerId>
 							</configuration>
 							<phase>none</phase>
 						</execution>
