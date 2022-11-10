@@ -17,16 +17,20 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.runeduniverse.tools</groupId>
-	<artifactId>build-helper</artifactId>
-	<version>2022.10.15</version>
+
+	<groupId>net.runeduniverse.tools.build-helper</groupId>
+	<artifactId>build-helper-generic</artifactId>
 	<packaging>pom</packaging>
+	<version>1</version>
+
 	<name>Build Helper</name>
 	<description>contains dependency management for build/install/deploy of maven projects</description>
 	<inceptionYear>2021</inceptionYear>
+
 	<modules>
-		<module>build-helper-java</module>
+		<module>../maven-java</module>
 	</modules>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- ACTIVITIONS -->
@@ -579,63 +583,6 @@
 				</plugins>
 			</build>
 		</profile>
-		<profile>
-			<id>helper-install</id>
-			<build>
-				<defaultGoal>clean install</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-clean-plugin</artifactId>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-help-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>install</phase>
-								<goals>
-									<goal>all-profiles</goal>
-									<goal>active-profiles</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>helper-deploy</id>
-			<build>
-				<defaultGoal>deploy</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-deploy-plugin</artifactId>
-						<configuration>
-							<skip>false</skip>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-help-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>deploy</phase>
-								<goals>
-									<goal>all-profiles</goal>
-									<goal>active-profiles</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 	</profiles>
 	<build>
 		<pluginManagement>
@@ -744,11 +691,7 @@
 						<execution>
 							<id>jenkins</id>
 							<inherited>true</inherited>
-							<configuration>
-								<homedir>/srv/jenkins/gpg</homedir>
-								<keyname>9CB231CE2918B342</keyname>
-								<passphraseServerId>gpg-signature-software</passphraseServerId>
-							</configuration>
+							<!-- configuration = preconfigured -->
 							<phase>none</phase>
 						</execution>
 					</executions>

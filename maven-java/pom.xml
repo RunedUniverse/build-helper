@@ -18,13 +18,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.runeduniverse.tools</groupId>
-		<artifactId>build-helper</artifactId>
-		<version>2022.10.15</version>
+		<groupId>net.runeduniverse.tools.build-helper</groupId>
+		<artifactId>build-helper-generic</artifactId>
+		<version>1</version>
+		<relativePath>../maven-generic/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>build-helper-java</artifactId>
 	<packaging>pom</packaging>
+	<version>${project.parent.version}.1</version>
 
 	<name>Build Helper Java</name>
 	<description>contains dependency management for build/install/deploy of maven projects</description>
