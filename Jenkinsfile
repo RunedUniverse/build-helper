@@ -7,7 +7,7 @@ pipeline {
 	environment {
 		PATH = """${sh(
 				returnStdout: true,
-				script: 'printf $WORKSPACE/.build:$PATH'
+				script: 'chmod +x $WORKSPACE/.build/*; printf $WORKSPACE/.build:$PATH'
 			)}"""
 
 		MAVEN_SETTINGS = """${sh(
