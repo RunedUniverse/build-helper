@@ -25,6 +25,7 @@
 
 	<name>Build Helper</name>
 	<description>contains dependency management for build/install/deploy of maven projects</description>
+	<url>https://github.com/RunedUniverse/build-helper</url>
 	<inceptionYear>2021</inceptionYear>
 
 	<modules>

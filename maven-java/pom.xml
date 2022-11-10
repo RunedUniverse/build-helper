@@ -30,6 +30,8 @@
 
 	<name>Build Helper Java</name>
 	<description>contains dependency management for build/install/deploy of maven projects</description>
+	<url>https://github.com/RunedUniverse/build-helper</url>
+	<inceptionYear>2021</inceptionYear>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
