@@ -10,6 +10,10 @@ pipeline {
 				script: 'chmod +x $WORKSPACE/.build/*; printf $WORKSPACE/.build:$PATH'
 			)}"""
 
+		GLOBAL_MAVEN_SETTINGS = """${sh(
+				returnStdout: true,
+				script: 'printf /srv/jenkins/.m2/global-settings.xml'
+			)}"""
 		MAVEN_SETTINGS = """${sh(
 				returnStdout: true,
 				script: 'printf $WORKSPACE/.mvn/settings.xml'
