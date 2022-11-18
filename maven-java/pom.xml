@@ -153,7 +153,6 @@
 					org.apache.maven.plugins:maven-help-plugin:effective-pom
 					org.apache.maven.plugins:maven-clean-plugin:clean
 					org.apache.maven.plugins:maven-resources-plugin:resources
-					org.apache.maven.plugins:maven-toolchains-plugin:toolchain
 					org.apache.maven.plugins:maven-compiler-plugin:compile
 					org.apache.maven.plugins:maven-resources-plugin:testResources
 					org.apache.maven.plugins:maven-compiler-plugin:testCompile
@@ -164,28 +163,6 @@
 					org.apache.maven.plugins:maven-install-plugin:install
 				</defaultGoal>
 				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-toolchains-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>jenkins</id>
-								<inherited>true</inherited>
-								<phase>initialize</phase>
-								<goals>
-									<goal>toolchain</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>jenkins-testing</id>
-								<inherited>true</inherited>
-								<phase>initialize</phase>
-								<goals>
-									<goal>toolchain</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-compiler-plugin</artifactId>
@@ -285,7 +262,6 @@
 			<build>
 				<defaultGoal>
 					org.apache.maven.plugins:maven-help-plugin:effective-pom
-					org.apache.maven.plugins:maven-toolchains-plugin:toolchain
 					org.apache.maven.plugins:maven-surefire-plugin:test
 				</defaultGoal>
 				<plugins>
@@ -299,28 +275,6 @@
 								<phase>process-test-resources</phase>
 								<goals>
 									<goal>testResources</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-toolchains-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>jenkins</id>
-								<inherited>true</inherited>
-								<phase>initialize</phase>
-								<goals>
-									<goal>toolchain</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>jenkins-testing</id>
-								<inherited>true</inherited>
-								<phase>initialize</phase>
-								<goals>
-									<goal>toolchain</goal>
 								</goals>
 							</execution>
 						</executions>
