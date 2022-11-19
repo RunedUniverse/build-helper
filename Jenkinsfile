@@ -25,11 +25,11 @@ pipeline {
 
 		CHANGES_MAVEN_GENERIC = """${sh(
 				returnStdout: true,
-				script: '.build/git-check-for-change maven-generic/ mvn-generic'
+				script: '.build/git-check-for-change maven-generic/pom.xml mvn-generic'
 			)}"""
 		CHANGES_MAVEN_JAVA = """${sh(
 				returnStdout: true,
-				script: '.build/git-check-for-change maven-java/ mvn-java'
+				script: '.build/git-check-for-change maven-java/pom.xml mvn-java'
 			)}"""
 	}
 	stages {
@@ -39,8 +39,8 @@ pipeline {
 				sh 'echo "M2_HOME = ${M2_HOME}"'
 				sh 'printenv | sort'
 				sh '''
-					echo CHANGES_MAVEN_GENERIC=$(git-check-for-change maven-generic/ mvn-generic)
-					echo CHANGES_MAVEN_JAVA=$(git-check-for-change maven-java/ mvn-java)
+					echo CHANGES_MAVEN_GENERIC=$(git-check-for-change maven-generic/pom.xml mvn-generic)
+					echo CHANGES_MAVEN_JAVA=$(git-check-for-change maven-java/pom.xml mvn-java)
 				'''
 			}
 		}
@@ -70,6 +70,12 @@ pipeline {
 							sh 'ls -l target'
 						}
 					}
+					post {
+						always {
+							archiveArtifacts artifacts: 'maven-generic/target/*.pom', fingerprint: true
+							archiveArtifacts artifacts: 'maven-generic/target/*.asc', fingerprint: true
+						}
+					}
 				}
 			}
 		}
@@ -83,6 +89,12 @@ pipeline {
 						dir(path: 'maven-java') {
 							sh 'mvn-dev -P ${REPOS},install --non-recursive'
 							sh 'ls -l target'
+						}
+					}
+					post {
+						always {
+							archiveArtifacts artifacts: 'maven-java/target/*.pom', fingerprint: true
+							archiveArtifacts artifacts: 'maven-java/target/*.asc', fingerprint: true
 						}
 					}
 				}
@@ -143,12 +155,6 @@ pipeline {
 							}
 						}
 					}
-				}
-			}
-			post {
-				always {
-					archiveArtifacts artifacts: '*/target/*.pom', fingerprint: true
-					archiveArtifacts artifacts: '*/target/*.asc', fingerprint: true
 				}
 			}
 		}

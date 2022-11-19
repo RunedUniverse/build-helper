@@ -21,7 +21,7 @@
 	<groupId>net.runeduniverse.tools.build-helper</groupId>
 	<artifactId>build-helper-generic</artifactId>
 	<packaging>pom</packaging>
-	<version>1</version>
+	<version>2</version>
 
 	<name>Build Helper</name>
 	<description>contains dependency management for build/install/deploy of maven projects</description>
@@ -39,6 +39,7 @@
 		<!-- VERSIONS -->
 		<plugin-maven-help-version>3.2.0</plugin-maven-help-version>
 		<plugin-maven-clean-version>3.1.0</plugin-maven-clean-version>
+		<plugin-maven-toolchains-version>3.1.0</plugin-maven-toolchains-version>
 		<plugin-maven-resources-version>3.2.0</plugin-maven-resources-version>
 		<plugin-maven-install-version>3.0.0-M1</plugin-maven-install-version>
 		<plugin-mycila-license-version>4.2.rc1</plugin-mycila-license-version>
@@ -621,6 +622,23 @@
 					<executions>
 						<execution>
 							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-toolchains-plugin</artifactId>
+					<version>${plugin-maven-toolchains-version}</version>
+					<executions>
+						<execution>
+							<id>jenkins</id>
+							<inherited>true</inherited>
+							<phase>none</phase>
+						</execution>
+						<execution>
+							<id>jenkins-testing</id>
 							<inherited>true</inherited>
 							<phase>none</phase>
 						</execution>
